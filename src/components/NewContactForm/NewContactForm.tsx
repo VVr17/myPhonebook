@@ -3,8 +3,8 @@ import { yupResolver } from '@hookform/resolvers/yup'; // for React-hook-form wo
 import * as yup from 'yup'; // Form validation
 import { toast } from 'react-toastify'; // Notifications
 import { Button } from 'components/Button/Button';
-import { Input } from './Input/Input';
 import { IContact } from 'types/contacts';
+import { Input } from 'components/Input/Input';
 
 const INITIAL_STATE = {
   name: '',

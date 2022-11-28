@@ -1,0 +1,113 @@
+@import "normalize";
+/* bring in normalize.css styles */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  background-color: #f5f4fa;
+
+  /* SCROLL */
+  scrollbar-width: thin;
+}
+
+/* полоса прокрутки (скроллбар) */
+::-webkit-scrollbar {
+  width: 8px;
+  /* ширина для вертикального скролла */
+  height: 8px;
+  /* высота для горизонтального скролла */
+  background-color: rgba(168, 167, 167, 0.2);
+  border-radius: 4px;
+}
+
+/* ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+  background-color: #b3b0b0;
+  border-radius: 9em;
+  box-shadow: inset 1px 1px 10px #f3faf7;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #03453b;
+}
+
+/* Стрелки */
+::-webkit-scrollbar-button:vertical:start:decrement {
+  background: linear-gradient(120deg,
+      #8c8c8c 40%,
+      rgba(0, 0, 0, 0) 41%),
+    linear-gradient(240deg, #8c8c8c 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(0deg, #8c8c8c 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #f6f8f4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-button:vertical:end:increment {
+  background: linear-gradient(300deg,
+      #8c8c8c 40%,
+      rgba(0, 0, 0, 0) 41%),
+    linear-gradient(60deg, #8c8c8c 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(180deg, #8c8c8c 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #f6f8f4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-button:horizontal:start:decrement {
+  background: linear-gradient(30deg,
+      #8c8c8c 40%,
+      rgba(0, 0, 0, 0) 41%),
+    linear-gradient(150deg, #8c8c8c 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(270deg, #8c8c8c 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #f6f8f4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-button:horizontal:end:increment {
+  background: linear-gradient(210deg,
+      #8c8c8c 40%,
+      rgba(0, 0, 0, 0) 41%),
+    linear-gradient(330deg, #8c8c8c 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(90deg, #8c8c8c 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #f6f8f4;
+  border-radius: 4px;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+  font-family: inherit;
+}

@@ -1,11 +1,11 @@
 import { Box } from 'components/Box/Box';
 import { Button } from 'components/Button/Button';
-import { ContactStyled } from './Contact.styled';
 import { deleteContact } from 'redux/contacts/contactsOperations';
 import { useAppDispatch } from 'redux/hooks';
 import { useState } from 'react';
 import { Modal } from 'components/Modal/Modal';
 import { UpdateContactForm } from 'components/UpdateContactForm/UpdateContactForm';
+import { ContactStyled } from './Contact.styled';
 
 interface IProps {
   name: string;

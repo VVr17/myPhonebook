@@ -19,6 +19,7 @@ export const Section: React.FC<IProps> = ({ title, children }) => (
       mx="auto"
       boxShadow={theme.boxShadow.second}
       borderRadius={theme.radii.normal}
+      textAlign="center"
     >
       {title && <Title>{title}</Title>}
       {children}

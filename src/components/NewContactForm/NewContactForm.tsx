@@ -43,11 +43,6 @@ const validationSchema = yup.object().shape({
     .required('Number is required'),
 });
 
-interface FormValues {
-  name: string;
-  number: string;
-}
-
 export const NewContactForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -65,7 +60,7 @@ export const NewContactForm: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<Omit<IContact, 'id'>>({
     defaultValues: { ...INITIAL_STATE },
     resolver: yupResolver(validationSchema),
   });
@@ -75,7 +70,7 @@ export const NewContactForm: React.FC = () => {
     return contacts.find(({ name }) => name.toLowerCase() === normalizedName);
   };
 
-  const onSubmit: SubmitHandler<FormValues> = data => {
+  const onSubmit: SubmitHandler<Omit<IContact, 'id'>> = data => {
     const { name } = data;
     const contactIsInPhoneBook = isInPhoneBook(name, contacts);
 

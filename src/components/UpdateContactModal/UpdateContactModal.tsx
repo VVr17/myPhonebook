@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom/dist';
 import { Box } from 'components/Box/Box';
 import { Button } from 'components/Button/Button';
 import { Container } from './UpdateContactModal.styled';
-import { updateContact } from 'redux/contacts/contactsOperations';
 import { IContact } from 'types/contacts';
+import { updateContact } from 'redux/contacts/contactsOperations';
 import { useAppDispatch } from 'redux/hooks';
 
 interface IProps {
@@ -27,7 +27,7 @@ export const UpdateContactModal: React.FC<IProps> = ({
   return (
     <Container>
       <p>User {contactToUpdate.name.toUpperCase()} is already in Contacts.</p>
-      <p>Do you want to update contact?</p>
+      <p>Do you want to update it?</p>
       <Box
         display="flex"
         justifyContent="center"

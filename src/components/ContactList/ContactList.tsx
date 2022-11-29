@@ -1,6 +1,6 @@
+import { useSelector } from 'react-redux';
 import { Contact } from '../Contact/Contact';
 import { Contacts } from './ContactList.styled';
-import { useSelector } from 'react-redux';
 import { contactsSelectors } from 'redux/contacts/contactsSelectors';
 
 export const ContactList: React.FC = () => {

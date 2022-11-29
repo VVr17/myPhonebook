@@ -1,4 +1,3 @@
-// import { useDispatch } from 'react-redux';
 import { useForm, SubmitHandler } from 'react-hook-form'; // Forms
 import { yupResolver } from '@hookform/resolvers/yup'; // for React-hook-form work with Yup
 import * as yup from 'yup'; // Form validation
@@ -6,9 +5,9 @@ import { Box } from 'components/Box/Box';
 import { Button } from 'components/Button/Button';
 import { Input } from 'components/Input/Input';
 import { INPUT_TYPES } from 'constants/constants';
+import { ISignUpUser } from 'types/user';
 import { userRegister } from 'redux/auth/authOperations';
 import { useAppDispatch } from 'redux/hooks';
-import { ISignUpUser } from 'types/user';
 
 const INITIAL_STATE = {
   name: '',
@@ -32,9 +31,9 @@ const validationSchema = yup.object().shape({
     .required('Email is required'),
   password: yup
     .string()
-    .min(6, 'Name should be at least 8 characters')
+    .min(7, 'Name should be at least 7 characters')
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{7,})/,
       'Password should be at least 8 characters and contain at least one lower case, one upper case, one number'
     )
     .required('Password is required'),

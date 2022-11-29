@@ -4,10 +4,10 @@ import * as yup from 'yup'; // Form validation
 import { Box } from 'components/Box/Box';
 import { Button } from 'components/Button/Button';
 import { Form, Title } from './UpdateContactForm.styled';
+import { IContact } from 'types/contacts';
 import { Input } from '../Input/Input';
 import { updateContact } from 'redux/contacts/contactsOperations';
 import { useAppDispatch } from 'redux/hooks';
-import { IContact } from 'types/contacts';
 
 const INITIAL_STATE = {
   name: '',

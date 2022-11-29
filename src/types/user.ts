@@ -13,3 +13,8 @@ export interface ISignInUser {
   email: string;
   password: string;
 }
+
+export interface IUserDb {
+  user: IUser;
+  token: string;
+}

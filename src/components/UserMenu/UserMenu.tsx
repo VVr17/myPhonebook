@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import { authSelectors } from 'redux/auth/authSelectors';
 import { Button } from 'components/Button/Button';
-import { MdLogout } from 'react-icons/md';
 import { FaUserLock } from 'react-icons/fa';
+import { MdLogout } from 'react-icons/md';
 import { userLogout } from 'redux/auth/authOperations';
 import { UserMenuStyled } from './UserMenu.styled';
 import { useAppDispatch } from 'redux/hooks';

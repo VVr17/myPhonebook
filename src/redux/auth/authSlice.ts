@@ -46,7 +46,7 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
         state.error = null;
       })
-      .addCase(userLogout.fulfilled, state => {
+      .addCase(userLogout.fulfilled, (state, { payload }) => {
         state.user = { name: null, email: null };
         state.token = null;
         state.isLoggedIn = false;
@@ -61,7 +61,7 @@ const authSlice = createSlice({
           state.error = null;
         }
       )
-      .addCase(getCurrentUser.pending, (state, { payload }) => {
+      .addCase(getCurrentUser.pending, state => {
         state.isRefreshing = true;
       })
       .addCase(userLogin.rejected, (state, { payload }: PayloadAction<any>) => {

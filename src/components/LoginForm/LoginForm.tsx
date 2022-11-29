@@ -4,10 +4,10 @@ import * as yup from 'yup'; // Form validation
 import { Button } from 'components/Button/Button';
 import { Box } from 'components/Box/Box';
 import { Input } from 'components/Input/Input';
+import { ISignInUser } from 'types/user';
 import { INPUT_TYPES } from 'constants/constants';
 import { userLogin } from 'redux/auth/authOperations';
 import { useAppDispatch } from 'redux/hooks';
-import { ISignInUser } from 'types/user';
 
 const INITIAL_STATE = {
   email: '',

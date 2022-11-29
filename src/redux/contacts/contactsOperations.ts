@@ -1,5 +1,5 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { IContact } from 'types/contacts';
 
@@ -61,7 +61,7 @@ export const updateContact = createAsyncThunk(
     try {
       const { data } = await axios.patch(`/contacts/${id}`, { name, number });
       toast.info(`${data.name.toUpperCase()} successfully updated`);
-      return data;
+      return data as IContact;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const err = error.message;

@@ -1,7 +1,7 @@
+import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { authSelectors } from 'redux/auth/authSelectors';
-import React from 'react';
 
 interface IProps {
   component: React.FC;

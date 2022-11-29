@@ -1,9 +1,9 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { authorizationHeader } from 'helpers/axiosOptions';
 import { toast } from 'react-toastify';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { authorizationHeader } from 'helpers/axiosOptions';
+import { ISignInUser, ISignUpUser, IUser, IUserDb } from 'types/user';
 import { RootState } from 'redux/store';
-import { ISignInUser, ISignUpUser } from 'types/user';
 
 export const userRegister = createAsyncThunk(
   'auth/register',
@@ -14,7 +14,7 @@ export const userRegister = createAsyncThunk(
       toast.success(
         `User ${data.user.name.toUpperCase()} has been successfully registered`
       );
-      return data;
+      return data as IUserDb;
     } catch (error) {
       toast.error('Register failed. Please, try again');
       if (axios.isAxiosError(error)) {
@@ -35,7 +35,7 @@ export const userLogin = createAsyncThunk(
       toast.success(
         `User ${data.user.name.toUpperCase()} has been successfully logged in`
       );
-      return data;
+      return data as IUserDb;
     } catch (error) {
       toast.error('Log in failed. Please, verify data and try again');
       if (axios.isAxiosError(error)) {
@@ -78,7 +78,7 @@ export const getCurrentUser = createAsyncThunk(
 
     try {
       const { data } = await axios.get('/users/current');
-      return data;
+      return data as IUser;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const err = error.message;

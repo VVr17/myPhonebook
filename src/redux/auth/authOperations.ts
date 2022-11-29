@@ -2,10 +2,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { authorizationHeader } from 'helpers/axiosOptions';
 import { toast } from 'react-toastify';
+import { RootState } from 'redux/store';
+import { ISignInUser, ISignUpUser } from 'types/user';
 
 export const userRegister = createAsyncThunk(
   'auth/register',
-  async (credentials, { rejectWithValue }) => {
+  async (credentials: ISignUpUser, { rejectWithValue }) => {
     try {
       const { data } = await axios.post('/users/signup', credentials);
       authorizationHeader.setAuthToken(data.token);
@@ -15,14 +17,18 @@ export const userRegister = createAsyncThunk(
       return data;
     } catch (error) {
       toast.error('Register failed. Please, try again');
-      return rejectWithValue(error.message);
+      if (axios.isAxiosError(error)) {
+        const err = error.message;
+        return rejectWithValue(err);
+      }
+      throw new Error('another error');
     }
   }
 );
 
 export const userLogin = createAsyncThunk(
   'auth/login',
-  async (credentials, { rejectWithValue }) => {
+  async (credentials: ISignInUser, { rejectWithValue }) => {
     try {
       const { data } = await axios.post('/users/login', credentials);
       authorizationHeader.setAuthToken(data.token);
@@ -32,21 +38,29 @@ export const userLogin = createAsyncThunk(
       return data;
     } catch (error) {
       toast.error('Log in failed. Please, verify data and try again');
-      return rejectWithValue(error.message);
+      if (axios.isAxiosError(error)) {
+        const err = error.message;
+        return rejectWithValue(err);
+      }
+      throw new Error('another error');
     }
   }
 );
 
 export const userLogout = createAsyncThunk(
   'auth/logout',
-  async (name, { rejectWithValue }) => {
+  async (name: string, { rejectWithValue }) => {
     try {
       await axios.post('/users/logout');
       toast.info(`User ${name.toUpperCase()} has been successfully logged out`);
       authorizationHeader.deleteAuthToken();
     } catch (error) {
       toast.error('Log out failed. Please, try again');
-      return rejectWithValue(error.message);
+      if (axios.isAxiosError(error)) {
+        const err = error.message;
+        return rejectWithValue(err);
+      }
+      throw new Error('another error');
     }
   }
 );
@@ -54,7 +68,8 @@ export const userLogout = createAsyncThunk(
 export const getCurrentUser = createAsyncThunk(
   'auth/getCurrentUser',
   async (_, { getState, rejectWithValue }) => {
-    const token = getState().auth.token;
+    const state = getState() as RootState;
+    const token = state.auth.token;
 
     if (!token)
       return rejectWithValue('There is no valid token, login is needed');
@@ -65,7 +80,11 @@ export const getCurrentUser = createAsyncThunk(
       const { data } = await axios.get('/users/current');
       return data;
     } catch (error) {
-      return rejectWithValue(error.message);
+      if (axios.isAxiosError(error)) {
+        const err = error.message;
+        return rejectWithValue(err);
+      }
+      throw new Error('another error');
     }
   }
 );

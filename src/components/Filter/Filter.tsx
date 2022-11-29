@@ -1,15 +1,21 @@
+import { useSelector } from 'react-redux';
+import { changeFilter } from 'redux/filter/filterSlice';
 import { FilterLabelStyled } from './Filter.styled';
+import { selectFilter } from 'redux/filter/filterSelectors';
+import { useAppDispatch } from 'redux/hooks';
 
-interface IProps {
-  value: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
-}
+export const Filter: React.FC = () => {
+  const filter = useSelector(selectFilter);
+  const dispatch = useAppDispatch();
 
-export const Filter: React.FC<IProps> = ({ value, onChange }) => {
   return (
     <FilterLabelStyled>
       Find contacts by name
-      <input type="text" value={value} onChange={onChange} />
+      <input
+        type="text"
+        value={filter}
+        onChange={event => dispatch(changeFilter(event.target.value))}
+      />
     </FilterLabelStyled>
   );
 };

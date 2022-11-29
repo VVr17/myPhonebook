@@ -1,25 +1,18 @@
 import { Contact } from '../Contact/Contact';
 import { Contacts } from './ContactList.styled';
-import { IContact } from 'types/contacts';
+import { useSelector } from 'react-redux';
+import { contactsSelectors } from 'redux/contacts/contactsSelectors';
 
-interface IProps {
-  contacts: IContact[];
-  onDeleteContact: (idToDelete: string) => void;
-}
+export const ContactList: React.FC = () => {
+  const filteredContacts = useSelector(
+    contactsSelectors.selectFilteredContacts
+  );
 
-export const ContactList: React.FC<IProps> = ({
-  contacts,
-  onDeleteContact,
-}) => {
   return (
     <Contacts>
-      {contacts.map(({ name, number, id }) => (
+      {filteredContacts.map(({ name, number, id }) => (
         <li key={id}>
-          <Contact
-            name={name}
-            number={number}
-            onDelete={() => onDeleteContact(id)}
-          />
+          <Contact name={name} number={number} id={id} />
         </li>
       ))}
     </Contacts>

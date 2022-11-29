@@ -1,10 +1,23 @@
 import { useForm, SubmitHandler } from 'react-hook-form'; // Forms
+import { useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup'; // for React-hook-form work with Yup
 import * as yup from 'yup'; // Form validation
 import { toast } from 'react-toastify'; // Notifications
 import { Button } from 'components/Button/Button';
-import { IContact } from 'types/contacts';
 import { Input } from 'components/Input/Input';
+import { INPUT_TYPES } from 'constants/constants';
+import { Loader } from 'components/Loader/Loader';
+import { contactsSelectors } from 'redux/contacts/contactsSelectors';
+import { useAppDispatch } from 'redux/hooks';
+import { IContact } from 'types/contacts';
+import { addContact } from 'redux/contacts/contactsOperations';
+import { Form } from './NewContactForm.styled';
+import { Box } from 'components/Box/Box';
+import { LinkStyled } from 'components/Navigation/NavLink/NavLink.styled';
+import { Modal } from 'components/Modal/Modal';
+import { UpdateContactModal } from 'components/UpdateContactModal/UpdateContactModal';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const INITIAL_STATE = {
   name: '',
@@ -35,60 +48,92 @@ interface FormValues {
   number: string;
 }
 
-interface IProps {
-  contacts: IContact[];
-  onFormSubmit: (data: Omit<IContact, 'id'>) => void;
-}
+export const NewContactForm: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const contacts = useSelector(contactsSelectors.selectContacts);
+  const isLoading = useSelector(contactsSelectors.selectLoading);
 
-export const NewContactForm: React.FC<IProps> = ({
-  contacts,
-  onFormSubmit,
-}) => {
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [duplicatedContact, setDuplicatedContact] = useState<IContact | null>(
+    null
+  );
+  const toggleModal = () => setModalIsOpen(prevModalState => !prevModalState);
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
+  } = useForm<FormValues>({
     defaultValues: { ...INITIAL_STATE },
     resolver: yupResolver(validationSchema),
   });
 
+  const isInPhoneBook = (name: string, contacts: IContact[] = []) => {
+    const normalizedName = name.toLowerCase();
+    return contacts.find(({ name }) => name.toLowerCase() === normalizedName);
+  };
+
   const onSubmit: SubmitHandler<FormValues> = data => {
     const { name } = data;
+    const contactIsInPhoneBook = isInPhoneBook(name, contacts);
 
-    if (isInPhoneBook(name)) {
-      toast.warn(`${name.toUpperCase()} is already in CONTACTS`);
-      reset();
+    if (contacts && contactIsInPhoneBook) {
+      toast.warn(`${name?.toUpperCase()} is already in CONTACTS`);
+      const { id } = contactIsInPhoneBook;
+
+      setDuplicatedContact({ ...data, id });
+      toggleModal();
       return;
     }
 
-    onFormSubmit({ ...data });
+    dispatch(addContact(data));
+    navigate('/contacts');
     reset();
   };
 
-  function isInPhoneBook(name: string) {
-    const normalizedName = name.toLowerCase();
-    return contacts.find(({ name }) => name.toLowerCase() === normalizedName);
-  }
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Input
-        name="name"
-        placeholder="Name"
-        register={register}
-        error={errors.name}
-      />
-      <Input
-        name="number"
-        placeholder="Phone number"
-        register={register}
-        error={errors.number}
-      />
-      <Button type="submit" name="primary">
-        Add Contact
-      </Button>
-    </form>
+    /* "handleSubmit" will validate inputs before invoking "onSubmit" */
+    <>
+      {/* "handleSubmit" will validate inputs before invoking "onSubmit"  */}
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          name="name"
+          placeholder="Name"
+          register={register}
+          error={errors.name}
+        />
+        <Input
+          type={INPUT_TYPES.tel}
+          name="number"
+          placeholder="Phone number"
+          register={register}
+          error={errors.number}
+        />
+        <Loader isLoading={isLoading} />
+        <Box
+          display={['flex']}
+          justifyContent={'space-between'}
+          maxWidth="280px"
+          mx="auto"
+        >
+          <Button type="submit" name="primary" disabled={modalIsOpen}>
+            Add Contact
+          </Button>
+          <LinkStyled to="/contacts">To Contacts</LinkStyled>
+        </Box>
+      </Form>
+      {modalIsOpen && (
+        <Modal closeModal={toggleModal}>
+          {duplicatedContact && (
+            <UpdateContactModal
+              contactToUpdate={duplicatedContact}
+              closeModal={toggleModal}
+            />
+          )}
+        </Modal>
+      )}
+    </>
   );
 };

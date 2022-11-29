@@ -6,6 +6,7 @@ interface IProps {
   name?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   children?: React.ReactNode;
+  disabled?: boolean;
 }
 
 export const Button: React.FC<IProps> = ({
@@ -13,9 +14,10 @@ export const Button: React.FC<IProps> = ({
   name,
   onClick,
   children,
+  disabled = false,
 }) => {
   return (
-    <ButtonStyled type={type} name={name} onClick={onClick}>
+    <ButtonStyled type={type} name={name} onClick={onClick} disabled={disabled}>
       {children}
     </ButtonStyled>
   );

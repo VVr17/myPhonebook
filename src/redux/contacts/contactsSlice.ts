@@ -5,7 +5,7 @@ import {
   addContact,
   deleteContact,
   fetchContacts,
-  // updateContact,
+  updateContact,
 } from './contactsOperations';
 
 // Define a type for the slice state
@@ -57,9 +57,21 @@ const contactsSlice = createSlice({
           state.items.splice(index, 1);
         }
       )
+      .addCase(
+        updateContact.fulfilled,
+        (state, { payload }: PayloadAction<IContact>) => {
+          state.isLoading = false;
+          state.error = null;
+          const index = state.items.findIndex(({ id }) => id === payload.id);
+          state.items.splice(index, 1, payload);
+        }
+      )
+
       .addCase(fetchContacts.pending, handlePending)
       .addCase(addContact.pending, handlePending)
       .addCase(deleteContact.pending, handlePending)
+      .addCase(updateContact.pending, handlePending)
+
       .addCase(fetchContacts.rejected, (state, { payload }) => {
         if (typeof payload === 'string') state.error = payload;
         state.isLoading = false;
@@ -71,19 +83,12 @@ const contactsSlice = createSlice({
       .addCase(deleteContact.rejected, (state, { payload }) => {
         if (typeof payload === 'string') state.error = payload;
         state.isLoading = false;
+      })
+      .addCase(updateContact.rejected, (state, { payload }) => {
+        if (typeof payload === 'string') state.error = payload;
+        state.isLoading = false;
       });
   },
-
-  // extraReducers: {
-  //   [updateContact.pending]: handlePending,
-
-  //   [updateContact.fulfilled](state, { payload }) {
-  //     state.isLoading = false;
-  //     state.error = null;
-  //     const index = state.items.findIndex(({ id }) => id === payload.id);
-  //     state.items.splice(index, 1, payload);
-  //   },
-  //   [updateContact.rejected]: handleRejected,
 });
 
 export const contactsReducer = contactsSlice.reducer;

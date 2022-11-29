@@ -21,7 +21,7 @@ export const fetchContacts = createAsyncThunk(
 
 export const addContact = createAsyncThunk(
   'contacts/addContact',
-  async (newContact: IContact, { rejectWithValue }) => {
+  async (newContact: Omit<IContact, 'id'>, { rejectWithValue }) => {
     try {
       const { data } = await axios.post('/contacts', newContact);
       toast.success(
@@ -55,19 +55,19 @@ export const deleteContact = createAsyncThunk(
   }
 );
 
-// export const updateContact = createAsyncThunk(
-//   'contacts/updateContact',
-//   async ({ name, number, id }: IContact, { rejectWithValue }) => {
-//     try {
-//       const { data } = await axios.patch(`/contacts/${id}`, { name, number });
-//       toast.info(`${data.name.toUpperCase()} successfully updated`);
-//       return data;
-//     } catch (error) {
-//       if (axios.isAxiosError(error)) {
-//         const err = error.message;
-//         return rejectWithValue(err);
-//       }
-//       throw new Error('another error');
-//     }
-//   }
-// );
+export const updateContact = createAsyncThunk(
+  'contacts/updateContact',
+  async ({ name, number, id }: IContact, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.patch(`/contacts/${id}`, { name, number });
+      toast.info(`${data.name.toUpperCase()} successfully updated`);
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const err = error.message;
+        return rejectWithValue(err);
+      }
+      throw new Error('another error');
+    }
+  }
+);

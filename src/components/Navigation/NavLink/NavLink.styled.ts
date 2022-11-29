@@ -1,7 +1,11 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
-export const LinkStyled = styled(Link)`
+type linkProps = {
+  name?: 'lightMode' | 'transparent';
+};
+
+export const LinkStyled = styled(Link)<linkProps>`
   display: inline-block;
   padding: ${p => p.theme.space[2]}px ${p => p.theme.space[3]}px;
   min-width: 120px;

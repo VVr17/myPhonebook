@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IContact } from 'types/contacts';
 import { IContactsState } from 'types/state';
 import {
   addContact,

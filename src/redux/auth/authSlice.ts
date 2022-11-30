@@ -8,7 +8,6 @@ import {
   userLogout,
   userRegister,
 } from './authOperations';
-import { IUser } from 'types/user';
 import { IAuthState } from 'types/state';
 
 // Define the initial state using that type

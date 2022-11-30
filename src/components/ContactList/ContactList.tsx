@@ -10,9 +10,9 @@ export const ContactList: React.FC = () => {
 
   return (
     <Contacts>
-      {filteredContacts.map(({ name, number, id }) => (
-        <li key={id}>
-          <Contact name={name} number={number} id={id} />
+      {filteredContacts.map(contact => (
+        <li key={contact.id}>
+          <Contact contact={contact} />
         </li>
       ))}
     </Contacts>

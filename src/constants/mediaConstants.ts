@@ -1,7 +1,19 @@
-export const containerWidth = ['100%', '100%', '768px', '1000px'];
-export const breakpoints = [480, 768, 1280];
+export const containerWidth: readonly string[] = [
+  '100%',
+  '100%',
+  '768px',
+  '1000px',
+];
+export const breakpoints: readonly number[] = [480, 768, 1280];
 
-export const mq = {
+type mediaType = {
+  readonly mediumMobile: string;
+  readonly smallOnly: string;
+  readonly medium: string;
+  readonly mediumOnly: string;
+  readonly large: string;
+};
+export const mq: mediaType = {
   mediumMobile: `@media screen and (min-width: ${
     breakpoints[0]
   }px) and  (max-width: ${breakpoints[1] - 0.02}px)`,

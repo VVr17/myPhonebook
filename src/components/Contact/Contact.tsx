@@ -6,16 +6,16 @@ import { deleteContact } from 'redux/contacts/contactsOperations';
 import { Modal } from 'components/Modal/Modal';
 import { UpdateContactForm } from 'components/UpdateContactForm/UpdateContactForm';
 import { useAppDispatch } from 'redux/hooks';
+import { IContact } from 'types/contacts';
 
 interface IProps {
-  name: string;
-  number: string;
-  id: string;
+  contact: IContact;
 }
 
-export const Contact: React.FC<IProps> = ({ name, number, id }) => {
+export const Contact: React.FC<IProps> = ({ contact }) => {
   const dispatch = useAppDispatch();
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const { name, number, id } = contact;
   const toggleModal = () => setModalIsOpen(prevModalState => !prevModalState);
 
   return (

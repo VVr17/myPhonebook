@@ -1,6 +1,6 @@
 import { Eye } from 'components/Eye/Eye';
 import { INPUT_TYPES } from 'constants/constants';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   Ref,
   MultipleFieldErrors,
@@ -35,7 +35,7 @@ export const Input: React.FC<IProps> = ({
 }) => {
   const [inputType, setInputType] = useState<string>(type);
 
-  const toggleInputType: React.MouseEventHandler<HTMLDivElement> = event => {
+  const toggleInputType = (event: React.MouseEvent<HTMLDivElement>) => {
     inputType === INPUT_TYPES.password
       ? setInputType(INPUT_TYPES.text)
       : setInputType(INPUT_TYPES.password);

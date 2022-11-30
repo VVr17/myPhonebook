@@ -9,15 +9,7 @@ import {
   userRegister,
 } from './authOperations';
 import { IUser } from 'types/user';
-
-// Define a type for the slice state
-export interface IAuthState {
-  user: IUser;
-  token: string | null;
-  isLoggedIn: boolean;
-  isRefreshing: boolean;
-  error: string | null;
-}
+import { IAuthState } from 'types/state';
 
 // Define the initial state using that type
 const authInitialState: IAuthState = {

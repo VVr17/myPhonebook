@@ -1,8 +1,8 @@
-import { MouseEventHandler, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { ModalStyled, Overlay } from './Modal.styled';
 
-const modalRoot = document.querySelector('#modal-root')!;
+const modalRoot: HTMLDivElement = document.querySelector('#modal-root')!;
 
 interface IProps {
   closeModal: () => void;
@@ -21,7 +21,7 @@ export const Modal: React.FC<IProps> = ({ children, closeModal }) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [closeModal]);
 
-  const handleBackdrop: MouseEventHandler<HTMLDivElement> = event => {
+  const handleBackdrop = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) closeModal();
   };
 

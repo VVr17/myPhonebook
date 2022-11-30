@@ -1,19 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IContact } from 'types/contacts';
-
+import { IContactsState } from 'types/state';
 import {
   addContact,
   deleteContact,
   fetchContacts,
   updateContact,
 } from './contactsOperations';
-
-// Define a type for the slice state
-interface IContactsState {
-  items: IContact[];
-  isLoading: boolean;
-  error: string | null;
-}
 
 // Define the initial state using that type
 const contactsInitialState: IContactsState = {

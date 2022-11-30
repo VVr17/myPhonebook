@@ -25,40 +25,28 @@ const contactsSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(
-        fetchContacts.fulfilled,
-        (state, { payload }: PayloadAction<IContact[]>) => {
-          state.isLoading = false;
-          state.error = null;
-          state.items = payload;
-        }
-      )
-      .addCase(
-        addContact.fulfilled,
-        (state, { payload }: PayloadAction<IContact>) => {
-          state.isLoading = false;
-          state.error = null;
-          state.items.push(payload);
-        }
-      )
-      .addCase(
-        deleteContact.fulfilled,
-        (state, { payload }: PayloadAction<IContact>) => {
-          state.isLoading = false;
-          state.error = null;
-          const index = state.items.findIndex(({ id }) => id === payload.id);
-          state.items.splice(index, 1);
-        }
-      )
-      .addCase(
-        updateContact.fulfilled,
-        (state, { payload }: PayloadAction<IContact>) => {
-          state.isLoading = false;
-          state.error = null;
-          const index = state.items.findIndex(({ id }) => id === payload.id);
-          state.items.splice(index, 1, payload);
-        }
-      )
+      .addCase(fetchContacts.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items = payload;
+      })
+      .addCase(addContact.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items.push(payload);
+      })
+      .addCase(deleteContact.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        const index = state.items.findIndex(({ id }) => id === payload.id);
+        state.items.splice(index, 1);
+      })
+      .addCase(updateContact.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        const index = state.items.findIndex(({ id }) => id === payload.id);
+        state.items.splice(index, 1, payload);
+      })
 
       .addCase(fetchContacts.pending, handlePending)
       .addCase(addContact.pending, handlePending)
@@ -69,18 +57,27 @@ const contactsSlice = createSlice({
         if (typeof payload === 'string') state.error = payload;
         state.isLoading = false;
       })
-      .addCase(addContact.rejected, (state, { payload }) => {
-        if (typeof payload === 'string') state.error = payload;
-        state.isLoading = false;
-      })
-      .addCase(deleteContact.rejected, (state, { payload }) => {
-        if (typeof payload === 'string') state.error = payload;
-        state.isLoading = false;
-      })
-      .addCase(updateContact.rejected, (state, { payload }) => {
-        if (typeof payload === 'string') state.error = payload;
-        state.isLoading = false;
-      });
+      .addCase(
+        addContact.rejected,
+        (state, { payload }: PayloadAction<any>) => {
+          if (typeof payload === 'string') state.error = payload;
+          state.isLoading = false;
+        }
+      )
+      .addCase(
+        deleteContact.rejected,
+        (state, { payload }: PayloadAction<any>) => {
+          if (typeof payload === 'string') state.error = payload;
+          state.isLoading = false;
+        }
+      )
+      .addCase(
+        updateContact.rejected,
+        (state, { payload }: PayloadAction<any>) => {
+          if (typeof payload === 'string') state.error = payload;
+          state.isLoading = false;
+        }
+      );
   },
 });
 

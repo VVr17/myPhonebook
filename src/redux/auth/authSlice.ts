@@ -44,15 +44,12 @@ const authSlice = createSlice({
         state.isLoggedIn = false;
         state.error = null;
       })
-      .addCase(
-        getCurrentUser.fulfilled,
-        (state, { payload }: PayloadAction<IUser>) => {
-          state.user = payload;
-          state.isLoggedIn = true;
-          state.isRefreshing = false;
-          state.error = null;
-        }
-      )
+      .addCase(getCurrentUser.fulfilled, (state, { payload }) => {
+        state.user = payload;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+        state.error = null;
+      })
       .addCase(getCurrentUser.pending, state => {
         state.isRefreshing = true;
       })
@@ -71,10 +68,13 @@ const authSlice = createSlice({
           if (typeof payload === 'string') state.error = payload;
         }
       )
-      .addCase(getCurrentUser.rejected, (state, { payload }) => {
-        if (typeof payload === 'string') state.error = payload;
-        state.isRefreshing = false;
-      });
+      .addCase(
+        getCurrentUser.rejected,
+        (state, { payload }: PayloadAction<any>) => {
+          if (typeof payload === 'string') state.error = payload;
+          state.isRefreshing = false;
+        }
+      );
   },
 });
 

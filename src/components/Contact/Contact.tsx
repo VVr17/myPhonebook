@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { Box } from 'components/Box/Box';
 import { Button } from 'components/Button/Button';
 import { ContactStyled } from './Contact.styled';
@@ -41,16 +42,19 @@ export const Contact: React.FC<IProps> = ({ contact }) => {
           <Button onClick={() => dispatch(deleteContact(id))}>Delete</Button>
         </Box>
       </ContactStyled>
-      {modalIsOpen && (
-        <Modal closeModal={toggleModal}>
-          <UpdateContactForm
-            closeModal={toggleModal}
-            name={name}
-            id={id}
-            number={number}
-          />
-        </Modal>
-      )}
+      {/* to check when element will be unmounted for animation */}
+      <AnimatePresence>
+        {modalIsOpen && (
+          <Modal key="modal" closeModal={toggleModal}>
+            <UpdateContactForm
+              closeModal={toggleModal}
+              name={name}
+              id={id}
+              number={number}
+            />
+          </Modal>
+        )}
+      </AnimatePresence>
     </>
   );
 };

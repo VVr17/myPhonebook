@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 
-export const ButtonStyled = styled.button`
+export const ButtonStyled = styled(motion.button)`
   padding: ${p => p.theme.space[2]}px ${p => p.theme.space[3]}px;
   min-width: 120px;
   min-height: 30px;

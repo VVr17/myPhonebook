@@ -17,7 +17,13 @@ export const Button: React.FC<IProps> = ({
   disabled = false,
 }) => {
   return (
-    <ButtonStyled type={type} name={name} onClick={onClick} disabled={disabled}>
+    <ButtonStyled
+      whileTap={{ scale: 0.95 }}
+      type={type}
+      name={name}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </ButtonStyled>
   );

@@ -1,3 +1,4 @@
+import { AnimatePresence } from 'framer-motion';
 import { useForm, SubmitHandler } from 'react-hook-form'; // Forms
 import { useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup'; // for React-hook-form work with Yup
@@ -91,7 +92,6 @@ export const NewContactForm: React.FC = () => {
   return (
     /* "handleSubmit" will validate inputs before invoking "onSubmit" */
     <>
-      {/* "handleSubmit" will validate inputs before invoking "onSubmit"  */}
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
           name="name"
@@ -119,16 +119,18 @@ export const NewContactForm: React.FC = () => {
           <LinkStyled to="/contacts">To Contacts</LinkStyled>
         </Box>
       </Form>
-      {modalIsOpen && (
-        <Modal closeModal={toggleModal}>
-          {duplicatedContact && (
-            <UpdateContactModal
-              contactToUpdate={duplicatedContact}
-              closeModal={toggleModal}
-            />
-          )}
-        </Modal>
-      )}
+      <AnimatePresence>
+        {modalIsOpen && (
+          <Modal closeModal={toggleModal}>
+            {duplicatedContact && (
+              <UpdateContactModal
+                contactToUpdate={duplicatedContact}
+                closeModal={toggleModal}
+              />
+            )}
+          </Modal>
+        )}
+      </AnimatePresence>
     </>
   );
 };

@@ -4,11 +4,11 @@ import { BASE_URL } from 'constants/constants';
 axios.defaults.baseURL = BASE_URL;
 
 export const authorizationHeader = {
-  setAuthToken(token) {
+  setAuthToken(token: string) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   },
 
-  deleteAuthToken(token) {
+  deleteAuthToken() {
     axios.defaults.headers.common.Authorization = '';
   },
 };
